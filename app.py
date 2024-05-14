@@ -1,8 +1,31 @@
 import fitz # PyMuPDF
 import streamlit as st
+
 import json
 import zipfile
 from io import BytesIO
+
+
+def check_credentials(username, password):
+    if username in st.secrets.users and st.secrets.users[username] == password:
+        return True
+    return False
+
+
+def login():
+    username = st.text_input("Имя пользователя", key="username_input")
+    password = st.text_input("Пароль", type="password", key="password_input")
+    if st.button("Войти"):
+        if check_credentials(username, password):
+            st.session_state.logged_in = True
+            st.session_state.username = username
+            st.experimental_rerun()
+        else:
+            st.error("Неверное имя пользователя или пароль")
+
+def logout():
+    st.session_state.logged_in = False
+    st.session_state.username = ""
 
 
 def overlay_area_between_titles(pdf_file, areas):
@@ -27,14 +50,26 @@ def overlay_area_between_titles(pdf_file, areas):
     return output_pdf
 
 def pdf_processor():
+
+    if "file_uploader_key" not in st.session_state:
+        st.session_state["file_uploader_key"] = 0
+
     st.title("Обработка билетов PDF")
     with open("templates.json", "rb") as f:
         templates = json.load(f)
     
-    uploaded_files = st.file_uploader("Билеты в формате PDF", type="pdf", accept_multiple_files=True)
+    uploaded_files = st.file_uploader("Билеты в формате PDF",
+                                      type="pdf",
+                                      accept_multiple_files=True,
+                                      key=st.session_state["file_uploader_key"])
+
+    if uploaded_files:
+        if st.button("Очистить список"):
+            st.session_state["file_uploader_key"] += 1
+            st.experimental_rerun()
+
     current_template = st.selectbox("Шаблон билета", list(templates.keys()))
-    
-    
+
     if st.button("Обработать PDF"):
         if uploaded_files:
             zip_buffer = BytesIO()
@@ -65,11 +100,23 @@ def other_functionality():
     st.write("This is another functionality screen.")
 
 
-st.sidebar.title("")
-options = st.sidebar.selectbox("Функционал", ["Обработка билетов PDF", "Other Functionality"])
+def render_main():
+    st.sidebar.title("")
+    st.sidebar.button("Выйти", on_click=logout)
+    options = st.sidebar.selectbox("Функционал", ["Обработка билетов PDF", "Other Functionality"])
+    if options == "Обработка билетов PDF":
+        pdf_processor()
+    elif options == "Other Functionality":
+        other_functionality()
 
-if options == "Обработка билетов PDF":
-    pdf_processor()
-elif options == "Other Functionality":
-    other_functionality()
+
+if __name__=="__main__":
+
+    if "logged_in" not in st.session_state:
+        st.session_state.logged_in = False
+
+    if st.session_state["logged_in"]:
+        render_main()
+    else:
+        login()
 
