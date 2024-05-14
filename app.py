@@ -18,7 +18,7 @@ def overlay_area_between_titles(pdf_file, areas):
               rect1 = text_instances1[0] 
               rect2 = text_instances2[0]
             
-              area_to_remove = fitz.Rect(int(rect1.x0-area["x_offset"]), int(rect1.y0-area["y_offset"]), page.rect.width, int(rect2.y0))
+              area_to_remove = fitz.Rect(int(rect1.x0+area["left_offset"]), int(rect1.y0+area["top_offset"]), page.rect.width, int(rect2.y0+area["bottom_offset"]))
               page.draw_rect(area_to_remove, color=(1, 1, 1), fill=(1, 1, 1))
     output_pdf = BytesIO()
     pdf_document.save(output_pdf)
