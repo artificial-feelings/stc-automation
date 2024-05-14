@@ -1,0 +1,16 @@
+{
+    "ТКП": [
+        {
+            "from": "Сведения об оплате/Payment information",
+            "to": "Уведомление",
+            "x_offset": 0,
+            "y_offset": 0
+        },
+        {
+            "from": "Место выдачи",
+            "to": "Рейс/Flight",
+            "x_offset": 10,
+            "y_offset": 5
+        }
+    ]
+}
