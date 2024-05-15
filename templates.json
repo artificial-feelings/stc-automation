@@ -30,5 +30,21 @@
             "top_offset": 0,
             "bottom_offset": 20
         }
+    ],
+    "МойАгент": [
+        {
+            "from": "Тариф / Fare",
+            "to": "Форма оплаты / Form of payment",
+            "left_offset": -100,
+            "top_offset": 0,
+            "bottom_offset": 10
+        },
+        {
+            "from": "Конец маршрутной квитанции / End of itinerary receipt",
+            "to": "Итого к оплате / Total to pay",
+            "left_offset": -1000,
+            "top_offset": 12,
+            "bottom_offset": 100
+        }
     ]
 }

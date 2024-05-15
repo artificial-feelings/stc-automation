@@ -19,7 +19,7 @@ def login():
         if check_credentials(username, password):
             st.session_state.logged_in = True
             st.session_state.username = username
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Неверное имя пользователя или пароль")
 
