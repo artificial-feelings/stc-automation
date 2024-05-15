@@ -27,10 +27,26 @@ def logout():
     st.session_state.logged_in = False
     st.session_state.username = ""
 
+def determine_template(pdf_document):
+    with open("templates.json", "rb") as f:
+        templates = json.load(f)
 
-def overlay_area_between_titles(pdf_file, areas):
+    first_page = pdf_document[0]
+    for key, item in templates.items():
+        if first_page.search_for(item["search_for"]):
+            return item["areas"]
+
+
+def overlay_area_between_titles(pdf_file, current_template):
     pdf_bytes = pdf_file.read()
     pdf_document = fitz.open(stream=pdf_bytes, filetype="pdf")
+    if current_template=="Автоопределение":
+        areas = determine_template(pdf_document)
+    else:
+        with open("templates.json", "rb") as f:
+            templates = json.load(f)
+            areas = templates[current_template]["areas"]
+
     for area in areas:
       for page_num in range(len(pdf_document)):
           page = pdf_document[page_num]
@@ -68,7 +84,7 @@ def pdf_processor():
             st.session_state["file_uploader_key"] += 1
             st.experimental_rerun()
 
-    current_template = st.selectbox("Шаблон билета", list(templates.keys()))
+    current_template = st.selectbox("Шаблон билета", ["Автоопределение"] + list(templates.keys()))
 
     if st.button("Обработать PDF"):
         if uploaded_files:
@@ -77,7 +93,7 @@ def pdf_processor():
             with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
                 for uploaded_file in uploaded_files:
                     # Process each uploaded PDF
-                    processed_pdf = overlay_area_between_titles(uploaded_file, templates[current_template])
+                    processed_pdf = overlay_area_between_titles(uploaded_file, current_template)
     
                     # Add processed PDF to the zip file
                     zip_file.writestr("processed_" + uploaded_file.name, processed_pdf.read())

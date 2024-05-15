@@ -1,50 +1,61 @@
 {
-    "ТКП": [
-        {
-            "from": "Сведения об оплате/Payment information",
-            "to": "Уведомление",
-            "left_offset": 0,
-            "top_offset": 0,
-            "bottom_offset": 0
-        },
-        {
-            "from": "Место выдачи",
-            "to": "Рейс/Flight",
-            "left_offset": -10,
-            "top_offset": -5,
-            "bottom_offset": 0
-        }
-    ],
-    "Aviakassa": [
-        {
-            "from": "ТАРИФ/FARE",
-            "to": "TOTAL COST OF TRANSPORTATION",
-            "left_offset": 0,
-            "top_offset": 0,
-            "bottom_offset": 20
-        },
-        {
-            "from": "ДЕТАЛИ ЗАКАЗА",
-            "to": "ИТОГО ПО ЗАКАЗУ:",
-            "left_offset": -1000,
-            "top_offset": 0,
-            "bottom_offset": 20
-        }
-    ],
-    "МойАгент": [
-        {
-            "from": "Тариф / Fare",
-            "to": "Форма оплаты / Form of payment",
-            "left_offset": -100,
-            "top_offset": 0,
-            "bottom_offset": 10
-        },
-        {
-            "from": "Конец маршрутной квитанции / End of itinerary receipt",
-            "to": "Итого к оплате / Total to pay",
-            "left_offset": -1000,
-            "top_offset": 12,
-            "bottom_offset": 100
-        }
-    ]
+    "ТКП": {
+        "search_for": "tch.ru",
+        "areas": [
+            {
+                "from": "Сведения об оплате/Payment information",
+                "to": "Уведомление",
+                "left_offset": 0,
+                "top_offset": 0,
+                "bottom_offset": 0
+            },
+            {
+                "from": "Место выдачи",
+                "to": "Рейс/Flight",
+                "left_offset": -10,
+                "top_offset": -5,
+                "bottom_offset": 0
+            }
+        ]
+    },
+
+    "Aviakassa": {
+        "search_for": "AVIAKASSA",
+        "areas": [
+            {
+                "from": "ТАРИФ/FARE",
+                "to": "TOTAL COST OF TRANSPORTATION",
+                "left_offset": 0,
+                "top_offset": 0,
+                "bottom_offset": 20
+            },
+            {
+                "from": "ДЕТАЛИ ЗАКАЗА",
+                "to": "ИТОГО ПО ЗАКАЗУ:",
+                "left_offset": -1000,
+                "top_offset": 0,
+                "bottom_offset": 20
+            }
+        ]
+    },
+
+    "Мой Агент": {
+        "search_for": "My Agent",
+        "areas": [
+            {
+                "from": "Тариф / Fare",
+                "to": "Форма оплаты / Form of payment",
+                "left_offset": -100,
+                "top_offset": 0,
+                "bottom_offset": 10
+            },
+            {
+                "from": "Конец маршрутной квитанции / End of itinerary receipt",
+                "to": "Итого к оплате / Total to pay",
+                "left_offset": -1000,
+                "top_offset": 12,
+                "bottom_offset": 100
+            }
+        ]
+    }
 }
