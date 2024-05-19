@@ -57,5 +57,25 @@
                 "bottom_offset": 100
             }
         ]
+    },
+
+    "Островок Билеты": {
+        "search_for": "8 800 770 74 89",
+        "areas": [
+            {
+                "from": "Payment Information",
+                "to": "Total amount",
+                "left_offset": -100,
+                "top_offset": -20,
+                "bottom_offset": 40
+            },
+            {
+                "from": "Конец маршрутной квитанции / End of itinerary receipt",
+                "to": "Итого к оплате / Total to pay",
+                "left_offset": -1000,
+                "top_offset": 12,
+                "bottom_offset": 100
+            }
+        ]
     }
 }
