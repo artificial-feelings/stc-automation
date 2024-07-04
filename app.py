@@ -39,9 +39,16 @@ def other_functionality():
 def render_main():
     st.sidebar.title("")
     st.sidebar.button("Выйти", on_click=logout)
-    options = st.sidebar.selectbox("Функционал", ["Убрать цены PDF", "Внести билеты PDF"])
-    if options == "Убрать цены PDF":
-        hide_prices_layout()
+    if st.session_state.username == "admin":
+        functionality = ["Внести билеты PDF", "Обработать цены в PDF"]
+    elif st.session_state.username == "stc-user":
+        functionality = ["Внести билеты PDF"]
+
+    options = st.sidebar.selectbox("Функционал", functionality)
+
+    if options == "Обработать цены в PDF":
+        if st.session_state.username == "admin":
+            hide_prices_layout()
     elif options == "Внести билеты PDF":
         extract_ticket_info_layout()
 
