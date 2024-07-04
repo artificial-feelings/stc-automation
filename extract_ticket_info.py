@@ -135,7 +135,10 @@ def extract_ticket_info_layout():
         st.session_state['file_uploader_key'] = 0
 
 
-    uploaded_files = st.file_uploader("Choose PDF files", type="pdf", accept_multiple_files=True, key=st.session_state["file_uploader_key"])
+    uploaded_files = st.file_uploader("Choose PDF files",
+                                      type="pdf",
+                                      accept_multiple_files=True,
+                                      key=st.session_state["file_uploader_key"])
     
     openai_api_key = os.getenv("OPENAI_API_KEY")
     google_sheet_id = os.getenv("GOOGLE_SHEET_ID")
@@ -147,11 +150,18 @@ def extract_ticket_info_layout():
         new_df = pd.DataFrame(columns=list(df.columns))
 
         if uploaded_files:
-            if st.button("Очистить список"):
+
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                process_button = st.button("Обработать PDF")
+            with col2:
+                clear_button = st.button("Очистить список")
+
+            if clear_button:
                 st.session_state['file_uploader_key'] += 1
                 st.experimental_rerun()
 
-            if st.button("Обработать PDF"):
+            if process_button:
                 # Initialize the progress bar
                 progress = st.progress(0)
                 total_files = len(uploaded_files)
