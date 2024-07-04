@@ -177,18 +177,26 @@ def extract_ticket_info_layout():
                     status_text.text(f"Обработано {processed_files} из {total_files} файлов. Ошибки: {error_count}")
 
                 df = read_google_sheet(sheet_service, google_sheet_id)
-                updated_df = pd.concat([df, new_df], ignore_index=True)
-                update_google_sheet(sheet_service, google_sheet_id, updated_df)
+                df = pd.concat([df, new_df], ignore_index=True)
+                update_google_sheet(sheet_service, google_sheet_id, df)
                 
                 st.write("Обработка билетов завершена")
                 
                 # Clear the list of uploaded files
                 st.session_state['file_uploader_key'] += 1
-                st.experimental_rerun()
+                st.rerun()
         
         # Display the current content of the Google Sheet
-        ending = get_ticket_wording(df)
-        st.write(f"На данный момент в таблице {len(df)} билет{ending}:")
+        st.markdown("---")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            ending = get_ticket_wording(df)
+            st.write(f"На данный момент в таблице {len(df)} билет{ending}:")
+
+        with col2:
+            if st.button("Обновить"):
+                df = read_google_sheet(sheet_service, google_sheet_id)
+                st.rerun()
         st.dataframe(df)
         
         sheet_url = f"https://docs.google.com/spreadsheets/d/{google_sheet_id}/edit"
