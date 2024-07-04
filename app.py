@@ -37,6 +37,8 @@ def other_functionality():
 
 
 def render_main():
+    st.set_page_config(layout="wide")
+    
     st.sidebar.title("")
     st.sidebar.button("Выйти", on_click=logout)
     if st.session_state.username == "admin":
