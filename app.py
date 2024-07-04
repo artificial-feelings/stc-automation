@@ -41,8 +41,10 @@ def render_main():
     st.sidebar.button("Выйти", on_click=logout)
     if st.session_state.username == "admin":
         functionality = ["Внести билеты PDF", "Обработать цены в PDF"]
-    elif st.session_state.username == "stc-user":
+    elif st.session_state.username == "stcuser":
         functionality = ["Внести билеты PDF"]
+    else:
+        functionality = []
 
     options = st.sidebar.selectbox("Функционал", functionality)
 
