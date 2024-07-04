@@ -151,7 +151,7 @@ def extract_ticket_info_layout():
 
         if uploaded_files:
 
-            col1, col2 = st.columns([4, 1])
+            col1, col2 = st.columns([4, 2])
             with col1:
                 process_button = st.button("Обработать PDF")
             with col2:
