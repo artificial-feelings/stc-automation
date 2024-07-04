@@ -144,6 +144,7 @@ def extract_ticket_info_layout():
         credentials = load_google_credentials()
         sheet_service = build_sheets_service(credentials)
         df = read_google_sheet(sheet_service, google_sheet_id)
+        new_df = pd.DataFrame(columns=list(df.columns))
 
         if uploaded_files:
             if st.button("Очистить список"):
@@ -165,7 +166,7 @@ def extract_ticket_info_layout():
                             f.write(uploaded_file.getbuffer())
                         
                         results = process_file(uploaded_file.name)
-                        df = append_to_dataframe(df, results, uploaded_file.name)
+                        new_df = append_to_dataframe(new_df, results, uploaded_file.name)
                         processed_files += 1
                     except Exception as e:
                         st.error(f"Ошибка при обработке файла {uploaded_file.name}: {e}")
@@ -174,8 +175,10 @@ def extract_ticket_info_layout():
                     # Update the progress bar
                     progress.progress((i + 1) / total_files)
                     status_text.text(f"Обработано {processed_files} из {total_files} файлов. Ошибки: {error_count}")
-                
-                update_google_sheet(sheet_service, google_sheet_id, df)
+
+                df = read_google_sheet(sheet_service, google_sheet_id)
+                updated_df = pd.concat([df, new_df], ignore_index=True)
+                update_google_sheet(sheet_service, google_sheet_id, updated_df)
                 
                 st.write("Обработка билетов завершена")
                 
