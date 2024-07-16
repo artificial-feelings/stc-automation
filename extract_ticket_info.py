@@ -3,6 +3,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import openai
 import pandas as pd
+import numpy as np
 import os
 import json
 import base64
@@ -188,6 +189,9 @@ def extract_ticket_info_layout():
 
                 df = read_google_sheet(sheet_service, google_sheet_id)
                 df = pd.concat([df, new_df], ignore_index=True)
+                if 'Price' in df.columns:
+                    df['Price'] = df['Price'].apply(lambda x: np.nan if (x is None) or (x == "") else x)
+                    df['Price'] = df['Price'].astype(float)
                 update_google_sheet(sheet_service, google_sheet_id, df)
                 
                 st.write("Обработка билетов завершена")
