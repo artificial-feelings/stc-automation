@@ -189,9 +189,9 @@ def extract_ticket_info_layout():
 
                 df = read_google_sheet(sheet_service, google_sheet_id)
                 df = pd.concat([df, new_df], ignore_index=True)
-                if 'Price' in df.columns:
-                    #df['Price'] = df['Price'].apply(lambda x: np.nan if (x is None) or (x == "") else x)
-                    df['Price'] = df['Price'].fillna(0).astype(int)
+                # if 'Price' in df.columns:
+                #     #df['Price'] = df['Price'].apply(lambda x: np.nan if (x is None) or (x == "") else x)
+                #     df['Price'] = df['Price'].fillna(0).astype(int)
                 update_google_sheet(sheet_service, google_sheet_id, df)
 
                 st.write("Обработка билетов завершена")
