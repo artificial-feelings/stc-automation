@@ -11,9 +11,10 @@ def determine_template(pdf_document):
         templates = json.load(f)
 
     first_page = pdf_document[0]
-    for key, item in templates.items():
-        if first_page.search_for(item["search_for"]):
-            return item["areas"]
+    for page in pdf_document:
+        for key, item in templates.items():
+            if page.search_for(item["search_for"]):
+                return item["areas"]
         
 
 def overlay_area_between_titles(pdf_file, current_template):
