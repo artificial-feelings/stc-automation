@@ -7,7 +7,7 @@ import streamlit as st
 
 
 def determine_template(pdf_document):
-    with open("templates.json", "rb") as f:
+    with open("templates.json", "r") as f:
         templates = json.load(f)
 
     first_page = pdf_document[0]
@@ -23,7 +23,7 @@ def overlay_area_between_titles(pdf_file, current_template):
     if current_template=="Автоопределение":
         areas = determine_template(pdf_document)
     else:
-        with open("templates.json", "rb") as f:
+        with open("templates.json", "r") as f:
             templates = json.load(f)
             areas = templates[current_template]["areas"]
 
