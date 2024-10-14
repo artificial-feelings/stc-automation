@@ -45,14 +45,15 @@ def render_main():
         functionality = ["Внести билеты PDF", "Обработать цены в PDF"]
     elif st.session_state.username == "stcuser":
         functionality = ["Внести билеты PDF"]
+    elif st.session_state.username == "avia":
+        functionality = ["Обработать цены в PDF"]
     else:
         functionality = []
 
     options = st.sidebar.selectbox("Функционал", functionality)
 
     if options == "Обработать цены в PDF":
-        if st.session_state.username == "admin":
-            hide_prices_layout()
+        hide_prices_layout()
     elif options == "Внести билеты PDF":
         extract_ticket_info_layout()
 
